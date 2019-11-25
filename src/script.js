@@ -6,6 +6,6 @@ fetch("http://127.0.0.1:5000/tabs").then(data => data.json()).then(res => {
     //     element.classList.add('list-group-item');
     //     element.textContent = tab;
     //     tab_place.appendChild(element);
-    });
+    // });
 });
 
