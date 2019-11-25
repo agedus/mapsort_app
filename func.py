@@ -8,7 +8,5 @@ e_extension = ""
 
 
 def tabs_list():
-    print(config['SORT_DIRECTORY'])
-
-
-tabs_list()
+    for tab in config['SORT_DIRECTORY']['directorys'].split(","):
+        pass    
