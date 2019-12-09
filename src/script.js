@@ -33,6 +33,7 @@ function get_data() {
             let element = document.createElement('li');
             let input = document.createElement('input');
             element.classList.add('list-group-item');
+            input.classList.add("input_extension")
             input.id = "input_" + tab[0];
             input.placeholder = "Press enter to sent extension";
             input.style.width = "250px";
@@ -40,7 +41,18 @@ function get_data() {
             element.innerHTML += input.outerHTML;
             input_extension.appendChild(element);
         });
+
+        let test = document.querySelectorAll(".input_extension");
+
+        test.forEach(element => {
+            element.addEventListener("keypress", extension_push);
+        });
+
     });
+}
+
+function extension_push(event) {
+    console.log(event)
 }
 
 function clean() {
@@ -54,7 +66,7 @@ function clean() {
 function push_tab() {
     let input = document.getElementById("input_tabs").value;
     if (input) {
-        fetch("http://127.0.0.1:5000/pushdata?extension=" + input).then(data => data.json()).then(res => {
+        fetch("http://127.0.0.1:5000/pushdata?tab=" + input).then(data => data.json()).then(res => {
             console.log(res)
             if (res) {
                 clean();
@@ -67,3 +79,4 @@ function push_tab() {
 
 clean()
 get_data()
+

@@ -13,8 +13,8 @@ def tabs():
 
 @app.route('/pushdata')
 def name():
-    extesion = request.args.get('extension')
-    if extesion:
-        res = push_name(extesion)
+    tab = request.args.get('tab')
+    if tab:
+        res = push_name(tab)
         if res == "200":
             return jsonify(status="200")
