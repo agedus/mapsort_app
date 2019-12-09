@@ -7,4 +7,14 @@ app = Flask(__name__)
 @app.route('/tabs')
 def tabs():
     tabs = tabs_list()
-    return jsonify(data=tabs)
+    if tabs:
+        return jsonify(data=tabs)
+
+
+@app.route('/pushdata')
+def name():
+    extesion = request.args.get('extension')
+    if extesion:
+        res = push_name(extesion)
+        if res == "200":
+            return jsonify(status="200")

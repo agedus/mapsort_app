@@ -20,5 +20,12 @@ html, body {
     margin-top: 20px;
     height: 200px; 
 }
+ul {
+    list-style-type: none;  
+    margin-left: 5px;
+}
 
-
+input {
+    margin: 0;
+    height: 20px;
+}

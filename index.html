@@ -17,14 +17,21 @@
                         <h1 class="py-3" style="padding: 5%; margin: 0;">Mapsort</h1>
                   </div>
                   <div id="options" class="col-sm">
-                        <input id="input_tabs" class="col-sm" type="text" placeholder="Name the tab" value="" style="text-align: center;">
-                        <button class="col-sm btn btn-primary">Make a new sorting tab</button>
+                        <input id="input_tabs" class="col-sm" type="text" placeholder="Name tab" style="text-align: center;">
+                        <button onclick="push_tab()" id="push_tab" class="col-sm btn btn-primary">Make a new sorting tab</button>
                   </div>
             </div>
       </div>
       <div>
-            <ul id="tabs" class="list-group">
-
+            <ul id="names" class="d-inline-block ml-4 list-group">
+            </ul>
+            <ul id="extensions" class="d-inline-block list-group">
+            </ul>
+            <ul id="path_sort" class="d-inline-block list-group">
+            </ul>
+            <ul id="path_place" class="d-inline-block list-group">
+            </ul>
+            <ul id="input_extension" class="d-inline-block list-group">
             </ul>
       </div>
       <script src="src/script.js"></script>
