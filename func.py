@@ -12,15 +12,15 @@ def write():
 
 def tabs_list():
     tabs = config['SORT_DIRECTORY']['directorys'].split(",")
-    data = []
+    data = {}
     if tabs:
         for tab in tabs:
-            path_sort = ["path_sort", config[tab.upper()]['path_sort']]
-            path_place = ["path_place", config[tab.upper()]['path_place']]
-            extensions = ["extensions",
-                          config[tab.upper()]['extensions'].split(",")]
-            tab_data = [tab, path_sort, path_place, extensions]
-            data.append(tab_data)
+            data[tab] = {
+                "names": tab.upper(),
+                "path_sort": config[tab.upper()]['path_sort'],
+                "path_place": config[tab.upper()]['path_place'],
+                "extensions": config[tab.upper()]['extensions'].split(",")
+            }
     return data
 
 

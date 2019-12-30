@@ -1,59 +1,46 @@
 function get_data() {
     fetch("http://127.0.0.1:5000/tabs").then(data => data.json()).then(res => {
-        let name_place = document.getElementById("names");
-        res.data.forEach(function (tab) {
-            let element = document.createElement('li');
-            element.classList.add('list-group-item');
-            element.textContent = tab[0].toUpperCase();
-            name_place.appendChild(element);
-        });
-        let extensions_place = document.getElementById("extensions");
-        res.data.forEach(function (tab) {
-            let element = document.createElement('li');
-            element.classList.add('list-group-item');
-            element.textContent = tab[3][1];
-            extensions_place.appendChild(element);
-        });
-        let path_sort_place = document.getElementById("path_sort");
-        res.data.forEach(function (tab) {
-            let element = document.createElement('li');
-            element.classList.add('list-group-item');
-            element.textContent = tab[1][1];
-            path_sort_place.appendChild(element);
-        });
-        let path_place_place = document.getElementById("path_place");
-        res.data.forEach(function (tab) {
-            let element = document.createElement('li');
-            element.classList.add('list-group-item');
-            element.textContent = tab[2][1];
-            path_place_place.appendChild(element);
-        });
+
+        for (let tab in res.data) {
+            for (let list in res.data[tab]) {
+                let name = document.getElementById(list);
+                let element = document.createElement('li');
+                element.classList.add('list-group-item');
+                element.textContent = res.data[tab][list];
+                name.appendChild(element);
+            };
+        };
+
         let input_extension = document.getElementById("input_extension");
-        res.data.forEach(function (tab) {
+        for (let tab in res.data) {
             let element = document.createElement('li');
             let input = document.createElement('input');
             element.classList.add('list-group-item');
             input.classList.add("input_extension")
-            input.id = "input_" + tab[0];
+            input.id = "input_" + tab;
             input.placeholder = "Press enter to sent extension";
             input.style.width = "250px";
             input.style.textAlign = "center";
             element.innerHTML += input.outerHTML;
             input_extension.appendChild(element);
-        });
+        };
 
-        let test = document.querySelectorAll(".input_extension");
+        let press = document.querySelectorAll(".input_extension");
 
-        test.forEach(element => {
+        press.forEach(element => {
             element.addEventListener("keypress", extension_push);
         });
 
     });
-}
+};
 
 function extension_push(event) {
-    console.log(event)
-}
+    if (event.keyCode == 13) {
+        console.log(event)
+        console.log(event.srcElement.id);
+        console.log(event.srcElement.value);
+    };
+};
 
 function clean() {
     document.getElementById("names").innerHTML = "<li>NAME TAB</li>";
@@ -61,22 +48,22 @@ function clean() {
     document.getElementById("path_sort").innerHTML = "<li>FOLDER IT WIL SORT</li>";
     document.getElementById("path_place").innerHTML = "<li>FOLDER IT WIL PLACE THE FILES IN</li>";
     document.getElementById("input_extension").innerHTML = "<li>EXTENSIONS IT WIL FILTER</li>";
-}
+};
 
 function push_tab() {
     let input = document.getElementById("input_tabs").value;
     if (input) {
         fetch("http://127.0.0.1:5000/pushdata?tab=" + input).then(data => data.json()).then(res => {
-            console.log(res)
+            console.log(res);
             if (res) {
                 clean();
                 get_data();
-            }
+            };
         });
         document.getElementById("input_tabs").value = "";
     }
 }
 
-clean()
-get_data()
+clean();
+get_data();
 
