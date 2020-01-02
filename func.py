@@ -49,3 +49,23 @@ def push_name(name):
     tabs_check()
     write()
     return "200"
+
+
+def push_extension(extension, name):
+    id = name.split("_", 1)[1].upper()
+    extension_row = config[id]['extensions'].split(",")
+    if extension_row[0] == "None":
+        config[id]['extensions'] = extension
+        write()
+        return "200"
+    else:
+        if not extension in extension_row:
+            extension_row.append(extension)
+            ext_push = ""
+            for ext in extension_row:
+                ext_push += ext + ","
+            config[id]['extensions'] = ext_push[:-1]
+            write()
+            return "200"
+        else:
+            return "304"

@@ -36,9 +36,13 @@ function get_data() {
 
 function extension_push(event) {
     if (event.keyCode == 13) {
-        console.log(event)
-        console.log(event.srcElement.id);
-        console.log(event.srcElement.value);
+        fetch("http://127.0.0.1:5000/extension?ext=" + event.srcElement.value + "&tab=" + event.srcElement.id).then(data => data.json()).then(res => {
+            if (res == "200") {
+                clean();
+                get_data();
+            };
+        });
+        event.srcElement.value = "";
     };
 };
 
