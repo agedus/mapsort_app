@@ -3,13 +3,28 @@ function get_data() {
 
         for (let tab in res.data) {
             for (let list in res.data[tab]) {
-                let name = document.getElementById(list);
                 let element = document.createElement('li');
+                let name = document.getElementById(list);
                 element.classList.add('list-group-item');
                 element.textContent = res.data[tab][list];
                 name.appendChild(element);
             };
         };
+
+        let extension_edit = document.getElementById("extension_edit");
+        for (let tab in res.data) {
+            let element = document.createElement('li');
+            let button = document.createElement('button');
+            element.classList.add('list-group-item');
+            element.id = 'btn_li';
+            button.classList.add('btn');
+            button.classList.add('btn-primary');
+            button.id = 'extension_edit_btn';
+            button.innerHTML = 'Edit ' + 'extensions';
+            element.innerHTML += button.outerHTML
+            extension_edit.appendChild(element);
+        };
+
 
         let input_extension = document.getElementById("input_extension");
         for (let tab in res.data) {
@@ -37,7 +52,7 @@ function get_data() {
 function extension_push(event) {
     if (event.keyCode == 13) {
         fetch("http://127.0.0.1:5000/extension?ext=" + event.srcElement.value + "&tab=" + event.srcElement.id).then(data => data.json()).then(res => {
-            if (res == "200") {
+            if (res) {
                 clean();
                 get_data();
             };
@@ -49,6 +64,7 @@ function extension_push(event) {
 function clean() {
     document.getElementById("names").innerHTML = "<li>NAME TAB</li>";
     document.getElementById("extensions").innerHTML = "<li>EXTENSIONS IT FILTERS</li>";
+    document.getElementById("extension_edit").innerHTML = "<li>EDIT EXTENSIONS</li>";
     document.getElementById("path_sort").innerHTML = "<li>FOLDER IT WIL SORT</li>";
     document.getElementById("path_place").innerHTML = "<li>FOLDER IT WIL PLACE THE FILES IN</li>";
     document.getElementById("input_extension").innerHTML = "<li>EXTENSIONS IT WIL FILTER</li>";
