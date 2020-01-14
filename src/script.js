@@ -19,7 +19,6 @@ function get_data() {
             element.id = 'btn_li';
             button.classList.add('btn');
             button.classList.add('btn-primary');
-            button.id = 'extension_edit_btn';
             button.innerHTML = 'Edit ' + 'extensions';
             element.innerHTML += button.outerHTML
             extension_edit.appendChild(element);

@@ -30,12 +30,11 @@ input {
     height: 20px;
 }
 
-#btn_li {
-    height: 50px;
-    padding: 1px;
-    margin-bottom: -1px;
+#extension_edit {
+    max-height: 172px;
 }
 
-#extension_edit {
-    height: 123px;
+#btn_li {
+    border: none;
+    padding: 6.4px;
 }
