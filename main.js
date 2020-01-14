@@ -9,7 +9,7 @@ function createWindow() {
       nodeIntegration: true
     }
   });
-  // win.maximize()
+  win.maximize()
 
   // and load the index.html of the app.
   win.loadFile('index.html')

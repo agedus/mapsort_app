@@ -30,7 +30,7 @@ function get_data() {
             let element = document.createElement('li');
             let input = document.createElement('input');
             element.classList.add('list-group-item');
-            input.classList.add("input_extension")
+            input.classList.add("input_extension");
             input.id = "input_" + tab;
             input.placeholder = "Press enter to sent extension";
             input.style.width = "250px";
@@ -40,11 +40,9 @@ function get_data() {
         };
 
         let press = document.querySelectorAll(".input_extension");
-
         press.forEach(element => {
             element.addEventListener("keypress", extension_push);
         });
-
     });
 };
 
@@ -54,9 +52,9 @@ function extension_push(event) {
             if (res) {
                 clean();
                 get_data();
+                // document.getElementById("input_downloads").focus()
             };
         });
-        event.srcElement.value = "";
     };
 };
 
@@ -85,4 +83,3 @@ function push_tab() {
 
 clean();
 get_data();
-
