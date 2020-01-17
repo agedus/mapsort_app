@@ -1,3 +1,5 @@
+
+
 function get_data() {
     fetch("http://127.0.0.1:5000/tabs").then(data => data.json()).then(res => {
 
@@ -17,9 +19,13 @@ function get_data() {
             let button = document.createElement('button');
             element.classList.add('list-group-item');
             element.id = 'btn_li';
+            button.id = "button_" + tab;
             button.classList.add('btn');
             button.classList.add('btn-primary');
             button.innerHTML = 'Edit ' + 'extensions';
+            button.setAttribute('data-toggle', 'modal');
+            button.setAttribute('data-target', '#exampleModal');
+            button.setAttribute('onclick', 'edit_extension(id)');
             element.innerHTML += button.outerHTML
             extension_edit.appendChild(element);
         };
@@ -50,8 +56,7 @@ function extension_push(event) {
     if (event.keyCode == 13) {
         fetch("http://127.0.0.1:5000/extension?ext=" + event.srcElement.value + "&tab=" + event.srcElement.id).then(data => data.json()).then(res => {
             if (res) {
-                clean();
-                get_data();
+                reset();
                 // document.getElementById("input_downloads").focus()
             };
         });
@@ -73,13 +78,41 @@ function push_tab() {
         fetch("http://127.0.0.1:5000/pushdata?tab=" + input).then(data => data.json()).then(res => {
             console.log(res);
             if (res) {
-                clean();
-                get_data();
+                reset();
             };
         });
         document.getElementById("input_tabs").value = "";
     }
 }
 
-clean();
-get_data();
+function edit_extension(button_id) {
+    document.getElementById('popup_extensions').innerHTML = ""
+    fetch("http://127.0.0.1:5000/edit_extension?button_id=" + button_id).then(data => data.json()).then(res => {
+        let popup_extensions = document.getElementById("popup_extensions");
+        for (let extension in res.data) {
+            let ext = res.data[extension];
+            let element = document.createElement('li');
+            let button = document.createElement('button');
+            element.classList.add('extension_button');
+            element.classList.add('list-group-item');
+            element.classList.add('col');
+            element.classList.add('col-lg-auto');
+            element.classList.add('select_token');
+            element.style.margin = "5px"
+            button.id = "button_" + ext;
+            button.setAttribute('onclick', 'selected_extension(id)');
+            button.classList.add('btn');
+            button.classList.add('btn-primary');
+            button.innerHTML = ext;
+            element.innerHTML += button.outerHTML
+            popup_extensions.appendChild(element);
+        };
+    });
+};
+
+function reset() {
+    clean();
+    get_data();
+};
+
+reset();

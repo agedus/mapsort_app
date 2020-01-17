@@ -69,3 +69,12 @@ def push_extension(extension, name):
             return "200"
         else:
             return "304"
+
+
+def edit_extensions(id):
+    extensions = config[id]['extensions'].split(",")
+    if not extensions[0] == "None":
+        data = extensions
+        return data
+    else:
+        return "304"
