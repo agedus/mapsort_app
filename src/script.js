@@ -84,13 +84,43 @@ function push_tab() {
         document.getElementById("input_tabs").value = "";
     }
 }
+let selected_ext = []
+function selected_extension(id) {
+    if (selected_ext.includes(id)) {
+        let index = selected_ext.indexOf(id);
+        document.getElementById(id).style.backgroundColor = "#007BFF";
+        document.getElementById(id).style.borderColor = "#007BFF";
+        selected_ext.splice(index, 1);
+    } else {
+        selected_ext.push(id);
+        document.getElementById(id).style.backgroundColor = "red";
+        document.getElementById(id).style.borderColor = "red";
+    };
+};
+
+function push_selected_extension() {
+    if (selected_ext) {
+        console.log(selected_ext)
+        tab = selected_ext[0].split("_")[0].toString();
+        console.log(tab)
+        for (let extension in selected_ext) {
+            new_ext = selected_ext[extension].split("_")[2];
+            selected_ext.splice(extension, 1, new_ext)
+        };
+        let push = selected_ext.toString()
+        fetch("http://127.0.0.1:5000/edit_done?tab=" + tab + "&extensions=" + push).then(data => data.json()).then(res => {
+            console.log(res)
+        });
+    };
+};
+
 
 function edit_extension(button_id) {
-    document.getElementById('popup_extensions').innerHTML = ""
+    document.getElementById('popup_extensions').innerHTML = "";
     fetch("http://127.0.0.1:5000/edit_extension?button_id=" + button_id).then(data => data.json()).then(res => {
         let popup_extensions = document.getElementById("popup_extensions");
-        for (let extension in res.data) {
-            let ext = res.data[extension];
+        for (let extension in res.data["ext"]) {
+            let ext = res.data["ext"][extension];
             let element = document.createElement('li');
             let button = document.createElement('button');
             element.classList.add('extension_button');
@@ -98,8 +128,8 @@ function edit_extension(button_id) {
             element.classList.add('col');
             element.classList.add('col-lg-auto');
             element.classList.add('select_token');
-            element.style.margin = "5px"
-            button.id = "button_" + ext;
+            element.style.margin = "5px";
+            button.id = res.data["tab"] + "_button_" + ext;
             button.setAttribute('onclick', 'selected_extension(id)');
             button.classList.add('btn');
             button.classList.add('btn-primary');
@@ -111,8 +141,10 @@ function edit_extension(button_id) {
 };
 
 function reset() {
+    selected_ext = []
     clean();
     get_data();
+
 };
 
 reset();

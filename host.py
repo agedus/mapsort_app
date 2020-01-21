@@ -44,3 +44,16 @@ def edit_extension():
         return jsonify(data=extensions)
     else:
         return jsonify(status="304")
+
+
+@app.route('/edit_done')
+def edit_done():
+    tab = request.args.get('tab')
+    print(f"tab = {tab}")
+    extensions = request.args.get('extensions').split(',')
+    print(f"extensions = {extensions}")
+    res = edit_push(tab, extensions)
+    if res == "200":
+        return jsonify(status="200")
+    else:
+        return jsonify(status="304")

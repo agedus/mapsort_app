@@ -72,9 +72,25 @@ def push_extension(extension, name):
 
 
 def edit_extensions(id):
+    data = {}
     extensions = config[id]['extensions'].split(",")
     if not extensions[0] == "None":
-        data = extensions
+        data = {
+            "tab": id,
+            "ext": extensions
+        }
         return data
     else:
         return "304"
+
+
+def edit_push(tab, extensions):
+    old_extensions = config[tab]['extensions'].split(",")
+    new_extensions = ""
+    for extension in old_extensions:
+        if not extension in extensions:
+            new_extensions += extension + ","
+    print(new_extensions)
+    config[tab]['extensions'] = new_extensions[:-1]
+    write()
+    return "200"
