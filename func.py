@@ -90,7 +90,9 @@ def edit_push(tab, extensions):
     for extension in old_extensions:
         if not extension in extensions:
             new_extensions += extension + ","
-    print(new_extensions)
-    config[tab]['extensions'] = new_extensions[:-1]
+    if new_extensions == "":
+        config[tab]['extensions'] = "None"
+    else:
+        config[tab]['extensions'] = new_extensions[:-1]
     write()
     return "200"

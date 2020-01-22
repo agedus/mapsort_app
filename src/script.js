@@ -1,5 +1,3 @@
-
-
 function get_data() {
     fetch("http://127.0.0.1:5000/tabs").then(data => data.json()).then(res => {
 
@@ -109,7 +107,7 @@ function push_selected_extension() {
         };
         let push = selected_ext.toString()
         fetch("http://127.0.0.1:5000/edit_done?tab=" + tab + "&extensions=" + push).then(data => data.json()).then(res => {
-            console.log(res)
+            reset()
         });
     };
 };

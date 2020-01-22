@@ -23,7 +23,7 @@ def name():
 @app.route('/extension')
 def extension():
     extension = request.args.get('ext').replace(
-        ',', '').replace('.', '').lower()
+        ',', '').replace('.', '').replace(" ", "").lower()
     name = request.args.get('tab')
     print(extension, name)
     if extension and name:
