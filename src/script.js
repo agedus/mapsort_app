@@ -1,13 +1,23 @@
 function get_data() {
     fetch("http://127.0.0.1:5000/tabs").then(data => data.json()).then(res => {
-
         for (let tab in res.data) {
             for (let list in res.data[tab]) {
                 let element = document.createElement('li');
                 let name = document.getElementById(list);
                 element.classList.add('list-group-item');
-                element.textContent = res.data[tab][list];
-                name.appendChild(element);
+                element.id = list;
+                if (list == "path_sort" || list == "path_place") {
+                    let click = document.createElement('button');
+                    click.id = res.data[tab]['names'] + "-" + list;
+                    click.classList.add('btn');
+                    click.setAttribute('onclick', 'path(id)');
+                    click.textContent = res.data[tab][list];
+                    element.appendChild(click);
+                    name.appendChild(element);
+                } else {
+                    element.textContent = res.data[tab][list];
+                    name.appendChild(element);
+                }
             };
         };
 
@@ -49,6 +59,15 @@ function get_data() {
         });
     });
 };
+
+function path(id) {
+    let name = id.split("-")[0]
+    let type = id.split("-")[1]
+    fetch("http://127.0.0.1:5000/sort?id=" + name + "&type=" + type).then(data => data.json()).then(res => {
+        reset();
+    });
+
+}
 
 function extension_push(event) {
     if (event.keyCode == 13) {

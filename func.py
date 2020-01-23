@@ -1,6 +1,7 @@
 import subprocess
 import configparser
 
+
 config = configparser.ConfigParser()
 config.read('settings.ini')
 
@@ -96,3 +97,9 @@ def edit_push(tab, extensions):
         config[tab]['extensions'] = new_extensions[:-1]
     write()
     return "200"
+
+
+def path_select(id, type):
+        return "200"
+    else:
+        return "304"
