@@ -13,7 +13,8 @@ def tabs():
 
 @app.route('/pushdata')
 def name():
-    tab = request.args.get('tab').replace('_', '')
+    tab = request.args.get('tab').replace(
+        '_', '').replace('"', '').replace("'", '')
     if tab:
         res = push_name(tab)
         if res == "200":
@@ -23,7 +24,7 @@ def name():
 @app.route('/extension')
 def extension():
     extension = request.args.get('ext').replace(
-        ',', '').replace('.', '').lower()
+        ',', '').replace('.', '').replace(" ", "").lower()
     name = request.args.get('tab')
     print(extension, name)
     if extension and name:
@@ -53,6 +54,17 @@ def edit_done():
     extensions = request.args.get('extensions').split(',')
     print(f"extensions = {extensions}")
     res = edit_push(tab, extensions)
+    if res == "200":
+        return jsonify(status="200")
+    else:
+        return jsonify(status="304")
+
+
+@app.route('/sort')
+def sort():
+    id = request.args.get('id').split('_')[0]
+    type = request.args.get('type')
+    res = path_select(id, type)
     if res == "200":
         return jsonify(status="200")
     else:
